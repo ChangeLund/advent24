@@ -4,7 +4,7 @@
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello, World!");
+            Console.WriteLine("Running Advent Of Code 2024!");
             Day1.SolveDay1(); 
         }
     }
