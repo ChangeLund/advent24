@@ -3,8 +3,8 @@ using System.IO;
 using System.Linq;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
-namespace advent24
-{
+namespace advent24;
+
     public class Day1
     {
         
@@ -63,4 +63,3 @@ namespace advent24
         }
 
     }
-}
