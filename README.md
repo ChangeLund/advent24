@@ -1,1 +1,3 @@
-# advent24
+# Advent Of Code 2024
+
+https://adventofcode.com/
