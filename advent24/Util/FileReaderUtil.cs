@@ -1,16 +1,13 @@
-﻿
-namespace advent24
+﻿namespace advent24;
+
+public class FileReaderUtil
 {
-    public class FileReaderUtil
+    public static List<string> ReadFile(string path)
     {
-        public static List<string> ReadFile(string path)
-        {
-            StreamReader sr = new StreamReader(path);
+        StreamReader sr = new StreamReader(path);
 
-            var lines = File.ReadAllLines(path);
+        var lines = File.ReadAllLines(path);
 
-
-            return new List<string>(lines);
-        }
+        return new List<string>(lines);
     }
 }
