@@ -1,4 +1,6 @@
-﻿namespace advent24
+﻿using System.Reflection;
+
+namespace advent24
 {
     internal class Program
     {

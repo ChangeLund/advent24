@@ -8,76 +8,88 @@ public class Day2
     public static void SolveDay2()
     {
         Console.WriteLine("Solving Day 2");
-        var input = FileReaderUtil.ReadFile("C:\\Users\\enlund\\source\\repos\\advent24\\advent24\\Days\\2\\input.txt");
+        var input = FileReaderUtil.ReadFile("C:\\Users\\Endre\\source\\repos\\advent24\\advent24\\Days\\2\\input.txt");
         var testInput = new List<string> { "7 6 4 2 1", "1 2 7 8 9", "9 7 6 2 1", "1 3 2 4 5", "8 6 4 4 1", "1 3 6 7 9" };
         Part1(input);
-        Part2(testInput);
+        Part2(input);
     }
 
     internal static void Part1(List<string> input)
     {
-        Console.WriteLine("Solving Part1:");
-        var splittedInput = input.Select(c => c.Split(' ')).Select(x => x.Select(int.Parse).ToList()).ToList();
+        Console.WriteLine("Starting Part1");
+        var reports = input.Select(l => l.Split(" ").Select(x => int.Parse(x)).ToList()).ToList();
 
-        var sum = splittedInput.Count(c=> CountSafeFromList(c));
+        var numberOfSafe = reports.Select(l =>
+        {
+            var isIncreasing = l.First() < l.Last();
 
-        Console.WriteLine($"Total Sum:{sum}");
+            if (!isIncreasing) l.Reverse();
+
+            if (CountSafeReports(l.ToList())) return 1;
+            return 0;
+
+        }).Sum();
+
+        Console.WriteLine($"Total Safe reports: {numberOfSafe}");
     }
+
 
     internal static void Part2(List<string> input)
     {
-        Console.WriteLine("Solving Part2:");
-        var splittedInput = input.Select(c => c.Split(' ')).Select(x => x.Select(int.Parse).ToList()).ToList();
+        Console.WriteLine("Starting Part 2");
+        var reports = input.Select(l => l.Split(" ").Select(x => int.Parse(x)).ToList()).ToList();
 
-        var sum = splittedInput.Count(c => IsSafeWithDamper(c));
+        var numberOfSafe = reports.Select(l =>
+        {
+            var isIncreasing = l.First() < l.Last();
 
-        Console.WriteLine($"Sum Part 2: {sum}");
+            if (!isIncreasing) l.Reverse();
+
+            if (CountSafeReports(l.ToList())) return 1;
+
+            for (int i = 0; i < l.Count(); i++)
+            {
+                var tempList = new List<int>(l);
+                tempList.RemoveAt(i);
+                if (CountSafeReports(tempList.ToList())) return 1;
+            }
+
+            return 0;
+
+        }).Sum();
+
+        Console.WriteLine($"Total Safe reports: {numberOfSafe}");
     }
 
-    internal static bool IsSafeWithDamper(List<int> list)
+    private static bool CountSafeReports(List<int> input)
     {
-        if (CountSafeFromList(list))
+        var countBool = true;
+
+        for (int i = 0; i < input.Count - 1; i++)
         {
-            return true;
+            if (Math.Abs(input[i] - input[i + 1]) <= 3)
+            {
+                if (!countBool) continue;
+                if (input[i] > input[i + 1])
+                {
+                    countBool = false;
+                    continue;
+                }
+                if (input[i] - input[i + 1] == 0)
+                {
+                    countBool = false;
+                    continue;
+                }
+                countBool = true;
+            }
+            else
+            {
+                countBool = false;
+            }
+
         }
 
-        for (int i = 0; i < list.Count; i++)
-        {
-            var tempList = new List<int>(list);
-            tempList.RemoveAt(i);
-            if (CountSafeFromList(tempList))
-            {
-                return true;
-            }
-        }
+        return countBool;
 
-        return false;
-    }
-
-    internal static bool CountSafeFromList(List<int> list)
-    {
-        var increasing = true;
-        var decreasing = true;
-
-        for (int i = 0; i < list.Count - 1; i++)
-        {
-            var diff = list[i + 1] - list[i];
-            if (diff > 3 || diff < -3 || diff == 0)
-            {
-                increasing = false;
-                decreasing = false;
-                break;
-            }
-            if (diff < 0)
-            {
-                increasing = false;
-            }
-            if (diff > 0)
-            {
-                decreasing = false;
-            }
-        }
-
-        return increasing || decreasing;
     }
 }
