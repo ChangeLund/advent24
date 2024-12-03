@@ -8,7 +8,8 @@ namespace advent24
         {
             Console.WriteLine("Running Advent Of Code 2024!");
             //Day1.SolveDay1();
-            Day2.SolveDay2();
+            //Day2.SolveDay2();
+            Day3.SolveDay3();
         }
     }
 }
