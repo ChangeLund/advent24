@@ -10,7 +10,8 @@ namespace advent24
             //Day1.SolveDay1();
             //Day2.SolveDay2();
             //Day3.SolveDay3();
-            Day4.SolveDay4();
+            //Day4.SolveDay4();
+            Day5.SolveDay5();
         }
     }
 }
